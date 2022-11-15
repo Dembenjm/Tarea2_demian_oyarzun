@@ -1,0 +1,37 @@
+[tool.poetry]
+name = "fastapi-plus-sqlalchemy"
+version = "0.1.0"
+description = ""
+authors = ["Diego Alvarez S. <dialvarezs@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.12"
+psycopg2-binary = "^2.9.3"
+SQLAlchemy = "^1.4.41"
+alembic = "^1.8.1"
+fastapi = "^0.86.0"
+uvicorn = {extras = ["standard"], version = "^0.18.3"}
+sqlmodel = "^0.0.8"
+passlib = {extras = ["argon2"], version = "^1.7.4"}
+python-multipart = "^0.0.5"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "^0.16.2"
+black = "^22.10.0"
+isort = "^5.10.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe]
+envfile = ".env"
+
+[tool.poe.tasks]
+_isort = "isort -q myapi migrations"
+_black = "black -q myapi migrations"
+format = ["_isort", "_black"]
+start = { shell = "uvicorn myapi.main:app --reload" }
+shell = "poetry shell"
